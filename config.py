@@ -3,11 +3,9 @@ import torch
 
 class Config:
     # 数据集路径（需替换为实际路径）
-    DATA_ROOT = "/path/to/ADE20K"  # 请替换为实际路径
-    TRAIN_DIR = f"{DATA_ROOT}/images/training"
-    VAL_DIR = f"{DATA_ROOT}/images/validation"
-    TRAIN_ANN = f"{DATA_ROOT}/annotations/training"
-    VAL_ANN = f"{DATA_ROOT}/annotations/validation"
+    DATA_ROOT = "/Users/sydg/Documents/数据集/ADE20K_2021_17_01"
+    TRAIN_DIR = f"{DATA_ROOT}/images/ADE/training"
+    VAL_DIR = f"{DATA_ROOT}/images/ADE/validation"
     
     # 模型参数
     SCALE_FACTOR = 4  # 4x 超分辨率

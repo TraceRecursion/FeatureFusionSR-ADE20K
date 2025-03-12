@@ -47,19 +47,5 @@ FeatureFusionSR-ADE20K/
 └── README.md                 # 项目介绍
 ```
 
-## 入门指南
-1. 克隆仓库：
-   ```bash
-   git clone https://github.com/[YourGitHubUsername]/FeatureFusionSR-ADE20K.git
-   cd FeatureFusionSR-ADE20K
-   ```
-
-2. 安装依赖：
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3. 下载ADE20K数据集并进行预处理（参见data/README.md）。
-
 ## 许可证
 MIT许可证

@@ -10,7 +10,14 @@ class ADE20KDataset(Dataset):
         self.image_dir = image_dir
         self.scale_factor = scale_factor
         self.size = size
-        self.image_files = sorted([f for f in os.listdir(image_dir) if f.endswith('.jpg') or f.endswith('.png')])
+        
+        # 递归获取所有图像文件
+        self.image_files = []
+        for root, _, files in os.walk(image_dir):
+            for file in files:
+                if file.endswith('.jpg') or file.endswith('.png'):
+                    self.image_files.append(os.path.join(root, file))
+        self.image_files = sorted(self.image_files)
         
         self.transform = transforms.Compose([
             transforms.ToTensor(),
@@ -21,7 +28,7 @@ class ADE20KDataset(Dataset):
         return len(self.image_files)
     
     def __getitem__(self, idx):
-        img_path = os.path.join(self.image_dir, self.image_files[idx])
+        img_path = self.image_files[idx]
         hr_img = cv2.imread(img_path)
         hr_img = cv2.cvtColor(hr_img, cv2.COLOR_BGR2RGB)
         hr_img = cv2.resize(hr_img, (self.size, self.size), interpolation=cv2.INTER_CUBIC)
