@@ -1,11 +1,17 @@
 # config.py
 import torch
+import os
+from pathlib import Path
 
 class Config:
-    # 数据集路径
-    DATA_ROOT = "/Users/sydg/Documents/数据集/ADE20K_2021_17_01"
-    TRAIN_DIR = f"{DATA_ROOT}/images/ADE/training"
-    VAL_DIR = f"{DATA_ROOT}/images/ADE/validation"
+    USER_HOME = os.path.expanduser("~")
+    
+    DATA_ROOT = os.environ.get(
+        "ADE20K_DATASET_PATH", 
+        os.path.join(USER_HOME, "Documents", "数据集", "ADE20K_2021_17_01")
+    )
+    TRAIN_DIR = os.path.join(DATA_ROOT, "images", "ADE", "training")
+    VAL_DIR = os.path.join(DATA_ROOT, "images", "ADE", "validation")
     
     # 模型参数
     SCALE_FACTOR = 4
@@ -18,3 +24,10 @@ class Config:
     
     # 设备
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+    
+    @classmethod
+    def set_data_root(cls, new_path):
+        """允许在运行时更改数据集根路径"""
+        cls.DATA_ROOT = new_path
+        cls.TRAIN_DIR = os.path.join(cls.DATA_ROOT, "images", "ADE", "training")
+        cls.VAL_DIR = os.path.join(cls.DATA_ROOT, "images", "ADE", "validation")
