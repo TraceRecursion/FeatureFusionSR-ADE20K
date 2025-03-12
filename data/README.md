@@ -8,29 +8,9 @@
      ```
      /Users/sydg/Documents/数据集/ADE20K_2021_17_01/
      ├── images/
-     │   ├── ADE/
+     │   └── ADE/
      │       ├── training/
-     │       │   ├── cultural/
-     │       │   ├── home_or_hotel/
-     │       │   ├── industrial/
-     │       │   ├── nature_landscape/
-     │       │   ├── shopping_and_dining/
-     │       │   ├── sports_and_leisure/
-     │       │   ├── transportation/
-     │       │   ├── unclassified/
-     │       │   ├── urban/
-     │       │   └── work_place/
      │       └── validation/
-     │           ├── cultural/
-     │           ├── home_or_hotel/
-     │           ├── industrial/
-     │           ├── nature_landscape/
-     │           ├── shopping_and_dining/
-     │           ├── sports_and_leisure/
-     │           ├── transportation/
-     │           ├── unclassified/
-     │           ├── urban/
-     │           └── work_place/
      ├── index_ade20k.mat
      ├── index_ade20k.pkl
      └── objects.txt
