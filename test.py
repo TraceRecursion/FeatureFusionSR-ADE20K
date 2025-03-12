@@ -4,6 +4,7 @@ from data.ade20k_loader import get_dataloader
 from models.sr_model import FeatureFusionSR
 from utils.metrics import calculate_psnr, calculate_ssim
 from config import Config
+from tqdm import tqdm
 
 def test(model_path, test_loader):
     model = FeatureFusionSR().to(Config.DEVICE)
@@ -13,12 +14,16 @@ def test(model_path, test_loader):
     
     test_psnr, test_ssim = 0, 0
     with torch.no_grad():
-        for batch_idx, (lr_imgs, hr_imgs) in enumerate(test_loader):
-            lr_imgs, hr_imgs = lr_imgs.to(Config.DEVICE), hr_imgs.to(Config.DEVICE)
-            sr_imgs = model(lr_imgs)
-            test_psnr += calculate_psnr(sr_imgs, hr_imgs)
-            test_ssim += calculate_ssim(sr_imgs, hr_imgs)
-            print(f"Batch {batch_idx+1}/{len(test_loader)}, PSNR: {test_psnr/(batch_idx+1):.2f}, SSIM: {test_ssim/(batch_idx+1):.4f}")
+        # 测试进度条
+        with tqdm(total=len(test_loader.dataset), desc="Testing SR Model", unit="sample") as pbar:
+            for batch_idx, (lr_imgs, hr_imgs) in enumerate(test_loader):
+                lr_imgs, hr_imgs = lr_imgs.to(Config.DEVICE), hr_imgs.to(Config.DEVICE)
+                sr_imgs = model(lr_imgs)
+                test_psnr += calculate_psnr(sr_imgs, hr_imgs)
+                test_ssim += calculate_ssim(sr_imgs, hr_imgs)
+                
+                pbar.update(Config.BATCH_SIZE)
+                pbar.set_postfix({"PSNR": f"{test_psnr/(batch_idx+1):.2f}", "SSIM": f"{test_ssim/(batch_idx+1):.4f}"})
     
     test_psnr /= len(test_loader)
     test_ssim /= len(test_loader)
